@@ -30,7 +30,7 @@ It shows you a "preview" of exactly what files will be copied, changed, or delet
 * **Visual progress:** Displays clear progress bars and file sizes while copying so you never have to guess if the backup is frozen.
 * **Flexible sync job configuration:** Setting up or updating your backup jobs is effortless—just point to your `SOURCE` and `TARGET` folders and list the subfolders you want to include.
 
-![backup job configuration](screenshots/backup-job-configuration.png)
+  ![backup job configuration](screenshots/backup-job-configuration.png)
 
 ### 3) What's inside the box?
 * `sync-lib.sh`: The core execution engine containing script arguments validation, double-prompt safeguards, and the main rsync orchestration logic. You don't need to change this file.
@@ -41,7 +41,7 @@ It shows you a "preview" of exactly what files will be copied, changed, or delet
 * Ensure you are using a Unix-like environment with `rsync` installed.
 * Check if rsync is available: `rsync --version`
 
-### 5) Engine Script Usage
+### 5) Backup your files and Directories
 The core engine script `sync-engine.sh` handles individual directory copies directly:
 
 ```console
@@ -60,6 +60,9 @@ $ ./sync-engine.sh <source-directory> <target-directory> [mode]
 ```console
 $ ./sync-engine.sh ~/workspace /media/usb-drive/backup-hdd1/ delete-before
 ```
+
+### 6) Restore files from a backup
+
 
 ### 6) How to use it
 Instead of passing arguments manually every time, you can maintain clean profiles for your personal devices using wrapper files like the provided templates.
