@@ -1,12 +1,12 @@
-## 🐧 File Backup & Restore
+## 🐧 Backup & Restore Tool
 
-![GitHub top language](https://img.shields.io/github/languages/top/zappee/file-backup-restore)
-![GitHub Issues](https://img.shields.io/github/issues/zappee/file-backup-restore)
-![GitHub Release](https://img.shields.io/github/v/release/zappee/file-backup-restore)
+![GitHub top language](https://img.shields.io/github/languages/top/zappee/backup-and-restore-tool)
+![GitHub Issues](https://img.shields.io/github/issues/zappee/backup-and-restore-tool)
+![GitHub Release](https://img.shields.io/github/v/release/zappee/backup-and-restore-tool)
 
-#### ⭐⭐ Like this project? Support my work by giving it a star on [GitHub](https://github.com/zappee/file-backup-restore/) ⭐⭐
+#### ⭐⭐ Like this project? Support my work by giving it a star on [GitHub](https://github.com/zappee/backup-and-restore-tool) ⭐⭐
 
-![GitHub Repo stars](https://img.shields.io/github/stars/zappee/file-backup-restore?style=flat)
+![GitHub Repo stars](https://img.shields.io/github/stars/zappee/backup-and-restore-tool?style=flat)
 
 ### 1) Overview
 A simple, secure, and interactive file copy and backup tool to back up and restore files especially for laptops.
