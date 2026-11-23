@@ -31,8 +31,8 @@ It shows you a "preview" of exactly what files will be copied, changed, or delet
 
 ### 3) What's inside the box?
 * `sync-lib.sh`: The core execution engine containing script arguments validation, double-prompt safeguards, and the main rsync orchestration logic. You don't need to change this file.
-* `sync-to-hdd2.sh`: A job configuration illustrating how to back up local folders to your external hard drive.
-* `sync-from-hdd2.sh`: A corresponding job profile showing how to quickly reverse the flow to copy your files back (restore) from your external drive to your laptop (perfect for setting up a new computer or recovering from a crash).
+* `sync-to-portable-2.sh`: A job configuration illustrating how to back up local folders to your external hard drive.
+* `sync-from-portable-2.sh`: A corresponding job profile showing how to quickly reverse the flow to copy your files back (restore) from your external drive to your laptop. Perfect for setting up a new computer or recovering from a crash.
 
 ### 4) Prerequisites
 * Ensure you are using a Unix-like environment with `rsync` installed.
