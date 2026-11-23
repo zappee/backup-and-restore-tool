@@ -63,8 +63,8 @@ When configuring your backup, you can pick and choose which subfolders to includ
 **Create a Backup Job Script**
 
 Once your folders are organized, create a job script to define what gets backed up.
-A good naming convention for your automated backup sctipt is `sync-to-<portable-disk-label>.sh`.
-Where `<portable-disk-label>` is the label of your external or portable disk.
+A good naming convention for your automated backup sctipt is `sync-to-<media-label>.sh`.
+Where `<media-label>` is the label of your external or portable disk.
 
 Use [sync-to-portable-2.sh](bin/sync-to-portable-2.sh) as a template to create your own automated backup script.
 Below is an example setup that matches the folder structure above, you only need to update the `SOURCE_BASE`, `TARGET_BASE`, and `JOB` variables:
