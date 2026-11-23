@@ -33,9 +33,9 @@ It shows you a "preview" of exactly what files will be copied, changed, or delet
 ![backup job configuration](screenshots/backup-job-configuration.png)
 
 ### 3) What's inside the box?
-* `sync-engine.sh`: The core execution engine containing script arguments validation, double-prompt safeguards, and the main rsync orchestration logic. You don't need to change this file.
-* `sync-task-backup-hp.sh`: A configuration script illustrating how to back up local folders to your external hard drive.
-* `sync-task-restore-hp.sh`: A corresponding profile showing how to quickly reverse the flow to copy your files back from your external drive to your laptop (perfect for setting up a new computer or recovering from a crash).
+* `sync-lib.sh`: The core execution engine containing script arguments validation, double-prompt safeguards, and the main rsync orchestration logic. You don't need to change this file.
+* `sync-to-hdd2.sh`: A job configuration illustrating how to back up local folders to your external hard drive.
+* `sync-from-hdd2.sh`: A corresponding job profile showing how to quickly reverse the flow to copy your files back (restore) from your external drive to your laptop (perfect for setting up a new computer or recovering from a crash).
 
 ### 4) Prerequisites
 * Ensure you are using a Unix-like environment with `rsync` installed.
