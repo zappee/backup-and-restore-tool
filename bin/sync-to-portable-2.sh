@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 # ##############################################################################
-# Remal File Backup-Restore Tool - Job definition
+# Remal File Backup Tool - Job definition
 #
 # Release: 0.4.0
 # Created by arnold.somogyi@gmail.com

@@ -67,14 +67,14 @@ A good naming convention for your automated backup sctipt is `sync-to-<media-lab
 Where `<media-label>` is the label of your external or portable disk.
 
 Use [sync-to-portable-2.sh](bin/sync-to-portable-2.sh) as a template to create your own automated backup script.
-Below is an example setup that matches the folder structure above, you only need to update the `SOURCE_BASE`, `TARGET_BASE`, and `JOB` variables:
+Below is an example backup setup that matches the folder structure above, you only need to update the `SOURCE_BASE`, `TARGET_BASE`, and `JOB` variables:
 
 ```console
-SCRIPT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly SCRIPT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_HOME}/lib/sync-lib.sh"
 
-SOURCE_BASE="$HOME/Workspace"
-TARGET_BASE="$HOME/Mount/portable-2"
+readonly SOURCE_BASE="$HOME/Workspace"         # <-- important
+readonly TARGET_BASE="$HOME/Mount/portable-2"  # <-- important
 
 readonly JOB=(
   "documents        | mirror"
@@ -103,48 +103,51 @@ If you want to keep things simple and just maintain an exact copy of your comput
 * **mirror:** Keeps the target identical to the source by deleting obsolete files on the fly during the transfer. Best when the backup disk has plenty of free space.
 * **pre-purge:** A space-saving exact mirror. Scans and deletes all obsolete files from the target first before copying new data. Use this when your backup drive is low on free space so removed files make room before new ones arrive.
 
-### 6) Restore files from a backup
+### 6) Restore Files from a Backup
+A restore job copies your files back from your external backup drive to your laptop or desktop computer.
+You can also use this workflow to keep your files synchronized across multiple computers:
 
-
-### 6) How to use it
-Instead of passing arguments manually every time, you can maintain clean profiles for your personal devices using wrapper files like the provided templates.
-
-#### 6.1) Configure a machine to back up
-Copy the backup template file (`sync-task-backup-hp.sh`) to customize it for your specific machine (`sync-task-backup-hp-spectre.sh`) and edit your paths:
-
-```console
-SOURCE_HOME=/home/$USER/Workspace
-TARGET_HOME=/media/$USER/USB-Disk/hdd-1
+```
+LAPTOP 1  ---backup--->  EXTERNAL DRIVE  ---restore--->  LAPTOP 2
 ```
 
-Specify the directories you would like to back up:
+**Create a Restore Job Script**
+
+Configuring a restore job works the exact same way as setting up a backup in [(5) Backup your files and Directories](https://github.com/zappee/backup-and-restore-tool/tree/big-refactor#5-backup-your-files-and-directories).
+You simply swap the `SOURCE_BASE` and `TARGET_BASE` paths and adjust the sync modes in the `JOB` list as needed.
+
+A good naming convention for your automated restore script is `sync-from-<media-label>.sh` (matching with `sync-to-portable-2.sh`).
+
+Below is an example restore configuration that reverses the backup setup from earlier:
+
 ```console
-do_backup "1/3" projects delete-during
-do_backup "2/3" documents delete-during
-do_backup "3/3" software-installers keep
-```
+readonly SCRIPT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_HOME}/lib/sync-lib.sh"
 
-#### 6.2) Configure a machine to restore
-Copy the restore template file (`sync-task-restore-hp.sh`) to customize it for your specific machine (`sync-task-restore-hp-spectre.sh`) and reverse your paths:
+readonly SOURCE_BASE="$HOME/Mount/portable-2"  # <-- important
+readonly TARGET_BASE="$HOME/Workspace"         # <-- important
 
-```console
-SOURCE_HOME=/media/$USER/USB-Disk/hdd-1
-TARGET_HOME=/home/$USER/Workspace
+readonly JOB=(
+  "documents        | mirror"
+  "finance          | mirror"
+  "holiday          | mirror"
+  "music            | mirror"
+  "photo-album      | mirror"
+  "videos/series    | mirror"
+  "videos/my-videos | mirror"
+  "work             | mirror"
+)
 
-do_backup "1/2" projects delete-during
-do_backup "2/2" documents delete-during
+run_job "$SOURCE_BASE" "$TARGET_BASE" "${JOB[@]}"
 ```
 
 ### 7) How it works
-When you start a backup or recovery job, the tool stops and asks for your input twice to protect your data from accidental loss:
+When you start a backup or restore job, the tool stops and asks for your confirmation twice to protect your data from accidental loss:
 
-1.**Dry-run analysis:** The script simulates the task without altering data.
-2. **First prompt:** It displays the raw upcoming changes and pauses:
-   `Comparing the SOURCE and TARGET directories and show the difference. Continue? [y/n]`
-3. **Second prompt:** If you approve, it flashes a final warning before writing files to the destination medium:
-   `Do you want to copy files from SOURCE to TARGET?`
-   `Files on TARGET media will be overwritten!`
-   `Continue [y/n]`
+1. **First prompt: Dry-run preview** The script simulates the sync without modifying any data, showing you the exact differences between your source and target folders. It displays a list of the upcoming changes and pauses for your approval.
+2. **Second prompt: Final confirmation** Once you review and approve the preview, the tool displays a final warning before writing any changes to the destination drive.
+
+   ![backup](screenshots/backup-workflow.png)
 
 ### 8) Understanding `rsync` outputs
 When the comparison table scrolls past during Step 1, you can read the structural shortcodes (`YXcstpoguax`) using this reference pattern:
@@ -155,9 +158,9 @@ When the comparison table scrolls past during Step 1, you can read the structura
 
 ### 9) Source code
 
-[https://github.com/zappee/file-backup-restore](https://github.com/zappee/file-backup-restore)
+[https://github.com/zappee/backup-and-restore-tool](https://github.com/zappee/backup-and-restore-tool)
 
-### 🤝 Contributing
+### 10) 🤝 Contributing
 
 Contributions, feature requests, optimization, and bug reports are always welcome!
 For more information, please visit my [homepage](https://zappee.github.io).

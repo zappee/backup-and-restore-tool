@@ -1,13 +1,13 @@
 #!/bin/bash -eu
 # ##############################################################################
-# Remal File Backup-Restore Tool - Job definition
+# Remal File Restore Tool - Job definition
 #
 # Release: 0.4.0
 # Created by arnold.somogyi@gmail.com
 #
 # Copyright (c) 2020-2026 Remal Software and Arnold Somogyi All rights reserved
 # ##############################################################################
-SCRIPT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly SCRIPT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_HOME}/lib/sync-lib.sh"
 
 readonly SOURCE_BASE="$HOME/Mount/portable-2"
