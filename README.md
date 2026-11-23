@@ -21,10 +21,16 @@ It shows you a "preview" of exactly what files will be copied, changed, or delet
 
 ### 2) Why Use This Tool?
 * **Safe execution:** Automatically runs a dry-run first to visualize differences (additions, modifications, deletions) before executing the actual sync.
-* **Smart disk space management:** Offers three ways to handle your backups: save everything (`keep`), clean up old files before copying (`delete-before`), or clean up files as it goes (`delete-during`).
+* **Smart disk space management:** The tool offers three ways to handle your backups:
+  * `append`: Copies new and modified files from source to target, leaving deleted or older files untouched on the backup drive.
+  * `mirror`: Keeps the target identical to the source by deleting obsolete files on the fly during the file transfer. Best when the backup disk has ample free space.
+  * `pre-purge`: Space-saving exact mirror. Scans and purges all obsolete files from the target first before copying any new data. Use this when the backup drive is tight on free disk space so removed files free up room before new ones arrive.
 * **Output explainer:** Embedded documentation within the script breaks down complex rsync shortcodes.
-* **Built for multiple computers:** You can easily create custom configuration files for your work laptop, personal laptop, or family computers, keeping all your backup routines organized in one place.
+* **Built for multiple computers:** You can easily create custom backup and/or restore configuration scripts for your work laptop, personal laptop, or family computers, keeping all your backup routines organized in one place.
 * **Visual progress:** Displays clear progress bars and file sizes while copying so you never have to guess if the backup is frozen.
+* **Flexible sync job configuration:** Setting up or updating your backup jobs is effortless—just point to your `SOURCE` and `TARGET` folders and list the subfolders you want to include.
+
+![backup job configuration](screenshots/backup-job-configuration.png)
 
 ### 3) What's inside the box?
 * `sync-engine.sh`: The core execution engine containing script arguments validation, double-prompt safeguards, and the main rsync orchestration logic. You don't need to change this file.
