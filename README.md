@@ -42,24 +42,68 @@ It shows you a "preview" of exactly what files will be copied, changed, or delet
 * Check if rsync is available: `rsync --version`
 
 ### 5) Backup your files and Directories
-The core engine script `sync-engine.sh` handles individual directory copies directly:
+Before running your first backup, it is best to organize your files cleanly on your computer so the process works smoothly and effortlessly.
+The easiest approach is to keep all your personal files in one main parent folder.
+Scattering files across different locations on your system makes backing up, restoring, and verifying your data much harder to manage.
+Here is a recommended folder structure:
 
 ```console
-$ ./sync-engine.sh <source-directory> <target-directory> [mode]
+└── Workspace
+    ├── documents
+    ├── finance
+    ├── holiday
+    ├── learning
+    ├── music
+    ├── photo-album
+    ├── temp
+    ├── videos
+    ├── ...
+    └── work
 ```
 
-**Arguments:**
-* `source-directory`: The folder containing the files you want to back up.
-* `target-directory`: The target destination disk or folder for your backups.
-* `mode` (optional): Decides how target-only files are handled:
-  * `keep` (default): Never delete files from the backup directory.
-  * `delete-before`: Deletes removed files from the backup disk *before* transferring new files (ideal for low-capacity target drives).
-  * `delete-during`: Deletes removed files from the backup disk step-by-step *while* the transfer runs.
+When configuring your backup, you can pick and choose which subfolders to include, or completely skip unimportant ones, like the `temp` folder above.
 
-**Example:**
+**Create a Backup Job Script**
+Once your folders are organized, create a job script to define what gets backed up.
+A good naming convention for your automated backup sctipt is `sync-to-<portable-disk-label>.sh`.
+Where `<portable-disk-label>` is the label of your external or portable disk.
+
+Use [sync-to-portable-2.sh](bin/sync-to-portable-2.sh) as a template to create your own automated backup script.
+Below is an example setup that matches the folder structure above, you only need to update the `SOURCE_BASE`, `TARGET_BASE`, and `JOB` variables:
+
 ```console
-$ ./sync-engine.sh ~/workspace /media/usb-drive/backup-hdd1/ delete-before
+SCRIPT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_HOME}/lib/sync-lib.sh"
+
+SOURCE_BASE="$HOME/Workspace"
+TARGET_BASE="$HOME/Mount/portable-2"
+
+readonly JOB=(
+  "documents        | mirror"
+  "finance          | mirror"
+  "holiday          | mirror"
+  "music            | append"
+  "photo-album      | mirror"
+  "videos/series    | append"
+  "videos/my-videos | mirror"
+  "work             | mirror"
+)
+
+run_job "$SOURCE_BASE" "$TARGET_BASE" "${JOB[@]}"
 ```
+
+**Configuration Options:**
+* **SOURCE_BASE**: The main folder containing the files and subfolders you want to back up.
+* **TARGET_BASE**: The destination drive or folder where your backups will be stored.
+* **JOB**: A list of subfolders paired with their sync mode.
+
+In the example above, `documents` uses `mirror` mode, while `music` and `videos/series` use `append` mode.
+If you want to keep things simple and just maintain an exact copy of your computer on your external drive, stick with `mirror` for everything.
+
+**Available Sync Modes:**
+* **append:** Copies new and modified files from source to target, leaving deleted or older files untouched on the backup drive.
+* **mirror:** Keeps the target identical to the source by deleting obsolete files on the fly during the transfer. Best when the backup disk has plenty of free space.
+* **pre-purge:** A space-saving exact mirror. Scans and deletes all obsolete files from the target first before copying new data. Use this when your backup drive is low on free space so removed files make room before new ones arrive.
 
 ### 6) Restore files from a backup
 

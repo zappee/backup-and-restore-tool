@@ -8,10 +8,10 @@
 # Copyright (c) 2020-2026 Remal Software and Arnold Somogyi All rights reserved
 # ##############################################################################
 SCRIPT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_HOME}/sync-lib.sh"
+source "${SCRIPT_HOME}/lib/sync-lib.sh"
 
-SOURCE_BASE="$HOME/Workspace"
-TARGET_BASE="$HOME/Mount/hdd-3"
+readonly SOURCE_BASE="$HOME/Mount/portable-2"
+readonly TARGET_BASE="$HOME/Workspace"
 
 # ------------------------------------------------------------------------------
 # Job definition
@@ -20,13 +20,12 @@ TARGET_BASE="$HOME/Mount/hdd-3"
 #   subdirectory: must exist under SOURCE_BASE
 #   mode:         append, mirror, or pre-purge
 # ------------------------------------------------------------------------------
-readonly BACKUP_JOB=(
+readonly JOB=(
   "documents        | mirror"
   "learning         | mirror"
-  "music            | append"
   "photo-album      | mirror"
   "programming      | mirror"
-  "videos/my-videos | append"
+  "videos/my-videos | mirror"
 )
 
-run_job "$SOURCE_BASE" "$TARGET_BASE" "${BACKUP_JOB[@]}"
+run_job "$SOURCE_BASE" "$TARGET_BASE" "${JOB[@]}"
