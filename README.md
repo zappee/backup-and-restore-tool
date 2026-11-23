@@ -61,6 +61,7 @@ Here is a recommended folder structure:
 When configuring your backup, you can pick and choose which subfolders to include, or completely skip unimportant ones, like the `temp` folder above.
 
 **Create a Backup Job Script**
+
 Once your folders are organized, create a job script to define what gets backed up.
 A good naming convention for your automated backup sctipt is `sync-to-<portable-disk-label>.sh`.
 Where `<portable-disk-label>` is the label of your external or portable disk.
